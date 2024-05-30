@@ -1,7 +1,4 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -29,12 +26,17 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private int ballposY = 350;
 
-    private int ballXDir = -1;
+    // Ball speed
+    private int ballXDir = -2;
 
-    private int ballYDir = -2;
+    private int ballYDir = -3;
+
+
+    private MapGenerator map;
 
 
     public GamePlay() {
+        map = new MapGenerator(3,7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -46,7 +48,6 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     }
 
-
     @Override
     public void paint(Graphics graphic) {
         super.paint(graphic);
@@ -56,6 +57,9 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         //background
         graphic.setColor(Color.white);
         graphic.fillRect(1,1,692, 592);
+
+        // Map class for building bricks
+        map.draw((Graphics2D)graphic);
 
         // border
         graphic.setColor(Color.yellow);
@@ -67,7 +71,6 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         //System.out.println("right border");
         graphic.fillRect(0, 591, 692, 3);     // Bottom border
         //System.out.println("bottom border");
-
 
         // paddle
         graphic.setColor(Color.DARK_GRAY);
@@ -90,7 +93,6 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         timer.start();
 
         if(play) {
-
             // Ball - paddle interaction
             if(new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 550, 100, 8))) {
                 ballYDir = -ballYDir;
@@ -106,10 +108,8 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             if(ballposX > 670) {
                 ballXDir = -ballXDir;
             }
-
         }
         repaint();
-
     }
 
     @Override
@@ -152,8 +152,6 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         playerX -= 20;
 
     }
-
-
 
     @Override
     public void keyReleased(KeyEvent e) {
