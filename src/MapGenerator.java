@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class MapGenerator {
 
-    public int map [][];
+    public int[][] map;
     public int brickWidth;
     public int brickHeight;
 
@@ -25,11 +25,19 @@ public class MapGenerator {
                 if(map[i][j] > 0){
                     graphics2D.setColor(Color.BLACK);
                     graphics2D.fillRect(j*brickWidth + 80 ,i*brickHeight + 50, brickWidth, brickHeight);
+                    graphics2D.setStroke(new BasicStroke(3));
+                    graphics2D.setColor(Color.white);
+                    graphics2D.drawRect(j*brickWidth + 80 ,i*brickHeight + 50, brickWidth, brickHeight);
                 }
 
 
             }
         }
+
+    }
+
+    public void setBrickValue(int value, int row, int col){
+        map[row][col] = value;
 
     }
 
